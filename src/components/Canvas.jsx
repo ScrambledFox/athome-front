@@ -2,7 +2,10 @@ import styled from "styled-components";
 import ReactFlow, {
   Background,
   MiniMap,
+  ConnectionLineType,
+  SmoothStepEdge,
   removeElements,
+  addEdge,
 } from "react-flow-renderer";
 
 import CustomNodeComponent from "./CustomNodeComponent";
@@ -21,43 +24,48 @@ const initialElements = [
     id: "1",
     type: "special", // input node
     data: { label: "Input Node" },
-    position: { x: 250, y: 25 },
+    position: { x: 0, y: 25 },
   },
-  // default node
   {
     id: "2",
-    // you can also pass a React component as a label
-    data: { label: <div>Default Node</div> },
-    position: { x: 100, y: 125 },
+    type: "special", // input node
+    data: { label: "Test Node" },
+    position: { x: 150, y: 25 },
   },
   {
     id: "3",
-    type: "output", // output node
-    data: { label: "Output Node" },
-    position: { x: 250, y: 250 },
+    type: "special", // input node
+    data: { label: "Third Node" },
+    position: { x: 300, y: 25 },
   },
-  // animated edge
-  { id: "e1-2", source: "1", target: "2", animated: true },
-  { id: "e2-3", source: "2", target: "3" },
 ];
 
 const nodeTypes = {
   special: CustomNodeComponent,
 };
 
+const edgeTypes = {
+  default: SmoothStepEdge,
+};
+
 const Canvas = (props) => {
   const [elements, setElements] = useState(initialElements);
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els));
+  const onConnect = (params) => setElements((els) => addEdge(params, els));
 
   return (
     <FlexDiv>
       <ReactFlow
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         elements={elements}
         onElementsRemove={onElementsRemove}
+        onConnect={onConnect}
+        connectionLineType={ConnectionLineType.Straight}
+        defaultConnectionLineType={ConnectionLineType.SmoothStep}
       >
-        <Background variant="dots" gap={16} size={1} />
+        <Background variant="dots" gap={24} size={1} />
         <MiniMap nodeColor={"#000"} />
       </ReactFlow>
     </FlexDiv>

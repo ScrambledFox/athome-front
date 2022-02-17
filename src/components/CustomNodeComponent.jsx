@@ -14,7 +14,7 @@ const CustomNodeComponent = ({ data }) => {
   return (
     <CustomNode>
       <Handle type="target" position={Position.Left}></Handle>
-      <div>Sample Title</div>
+      <div>{data.label}</div>
       <Handle type="source" position={Position.Right}></Handle>
     </CustomNode>
   );

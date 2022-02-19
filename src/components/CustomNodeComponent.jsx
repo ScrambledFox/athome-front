@@ -5,19 +5,20 @@ const CustomNode = styled.div`
   background-color: #ffff;
   color: #000;
 
-  padding: 20px;
   border: 1px solid #000;
   border-radius: 3px;
+
+  #label {
+    padding: 20px;
+  }
+
+  &:hover {
+    background-color: #eee;
+  }
 `;
 
-const CustomNodeComponent = ({ data }) => {
-  return (
-    <CustomNode>
-      <Handle type="target" position={Position.Left}></Handle>
-      <div>{data.label}</div>
-      <Handle type="source" position={Position.Right}></Handle>
-    </CustomNode>
-  );
+const CustomNodeComponent = ({ children, data }) => {
+  return <CustomNode>{children}</CustomNode>;
 };
 
 export default CustomNodeComponent;

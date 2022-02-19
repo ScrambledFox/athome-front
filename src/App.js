@@ -4,7 +4,7 @@ import ComponentList from "./components/ComponentList";
 import Canvas from "./components/Canvas";
 
 const Main = styled.div`
-  color: #fff;
+  color: #000;
 
   display: flex;
   flex-direction: horizontal;

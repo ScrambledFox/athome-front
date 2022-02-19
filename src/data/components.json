@@ -1,0 +1,144 @@
+[
+  {
+    "label": "Numbers",
+    "blocks": [
+      {
+        "label": "Zero (0)",
+        "type": "zerotoone"
+      },
+      {
+        "label": "One (1)",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Number",
+        "type": "zerotoone-number"
+      }
+    ]
+  },
+  {
+    "label": "Logic",
+    "blocks": [
+      {
+        "label": "And",
+        "type": "onetoone"
+      },
+      {
+        "label": "Or",
+        "type": "onetoone"
+      },
+      {
+        "label": "Invert (NOT)",
+        "type": "onetoone"
+      }
+    ]
+  },
+  {
+    "label": "Comparison",
+    "blocks": [
+      {
+        "label": "A greater than B (>)",
+        "type": "twotoone"
+      },
+      {
+        "label": "A less than B (<)",
+        "type": "twotoone"
+      },
+      {
+        "label": "A equal to B (==)",
+        "type": "twotoone"
+      }
+    ]
+  },
+  {
+    "label": "Sensor",
+    "blocks": [
+      {
+        "label": "When Someone is Home",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Security Camera Activity",
+        "type": "zerotoone"
+      }
+    ]
+  },
+  {
+    "label": "Time",
+    "blocks": [
+      {
+        "label": "Is Day",
+        "type": "zerotoone"
+      },
+      {
+        "label": "After (X) Seconds",
+        "type": "onetoone-number"
+      }
+    ]
+  },
+  {
+    "label": "Smart IoT Devices",
+    "blocks": [
+      {
+        "label": "Set Coffee Machine",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Brew", "Auto-Clean"]
+        }
+      },
+      {
+        "label": "Get Coffee Machine State",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Coffee Bean Amount (%)",
+            "Coffee Ready Level (%)",
+            "Cleanliness (%)"
+          ]
+        }
+      },
+      {
+        "label": "Set Front Door",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Lock", "Unlock", "Open", "Close"]
+        }
+      },
+      {
+        "label": "Get Front door State",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": ["Locked", "Closed"]
+        }
+      },
+      {
+        "label": "Set Windows",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Lock", "Unlock", "Open", "Close"]
+        }
+      },
+      {
+        "label": "Get Windows State",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": ["Locked", "Closed"]
+        }
+      },
+      {
+        "label": "Set House Alarm ⚠",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Alarm 🔔", "Silence 🔇", "Enable ✔", "Fully Disable ‼"]
+        }
+      },
+      {
+        "label": "Get House Alarm State ⚠",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": ["Alarming 🔔‼", "Ready 👀"]
+        }
+      }
+    ]
+  }
+]

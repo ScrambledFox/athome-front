@@ -1,0 +1,10 @@
+/* block */
+.react-flow__node.selected > div {
+  background-color: #ccc;
+}
+
+/* edges */
+.react-flow__edge.selected > .react-flow__edge-path {
+  stroke: #f00;
+  stroke-width: 4px;
+}

@@ -4,24 +4,13 @@ import ListBlock from "./ListBlock";
 
 import componentCategories from "../data/components.json";
 
-const FlexDiv = styled.div`
-  background-color: #f7f7f7;
-  border-right: 2px solid #000;
+const VerticalFlexDiv = styled.div`
+  flex: 5;
 
-  flex: 1;
-  height: 100vh;
+  background: #fafafa;
 
   overflow-y: scroll;
-
-  .content {
-    padding: 10px;
-  }
-  h2 {
-    text-align: center;
-  }
 `;
-
-const Category = styled.div``;
 
 const ComponentList = () => {
   const onDragStart = (event, nodeType, label, data) => {
@@ -32,12 +21,16 @@ const ComponentList = () => {
   };
 
   return (
-    <FlexDiv>
+    <VerticalFlexDiv>
       <div className="content">
-        <div>You can drag these blocks to the pane on the right.</div>
+        <div style={{ textAlign: "center" }}>
+          Drag these blocks to the canvas on the right to start creating your
+          flow!
+        </div>
+
         {componentCategories.map((cat, i) => {
           return (
-            <Category key={i}>
+            <div key={i}>
               <h2>{cat.label}</h2>
               {cat.blocks.map((block, j) => {
                 return (
@@ -56,11 +49,11 @@ const ComponentList = () => {
                   ></ListBlock>
                 );
               })}
-            </Category>
+            </div>
           );
         })}
       </div>
-    </FlexDiv>
+    </VerticalFlexDiv>
   );
 };
 

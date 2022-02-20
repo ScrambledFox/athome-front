@@ -8,6 +8,8 @@ const CustomNode = styled.div`
   border: 1px solid #000;
   border-radius: 3px;
 
+  max-width: 200px;
+
   #label {
     padding: 20px;
   }

@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from "react";
-import styled from "styled-components";
+import { useState, useRef, useCallback, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
 import ReactFlow, {
   ReactFlowProvider,
   Background,
@@ -12,22 +12,38 @@ import ReactFlow, {
   updateEdge,
 } from "react-flow-renderer";
 
+import {
+  ControlledMenu as MenuInner,
+  MenuDivider,
+  MenuItem,
+  useMenuState,
+} from "@szhsin/react-menu";
+import {
+  menuSelector,
+  menuItemSelector,
+  menuDividerSelector,
+} from "@szhsin/react-menu/style-utils";
+import "@szhsin/react-menu/dist/core.css";
+
 import dagre from "dagre";
 
 import "../styling/flow.css";
 
-import CustomNodeComponent from "./CustomNodeComponent";
+// Blocks and edges
 import CustomEdgeComponent from "./CustomEdgeComponent";
 
-// Blocks
 import OneToOne from "./blocks/OneToOne";
 import TwoToOne from "./blocks/TwoToOne";
 import OneToZero from "./blocks/OneToZero";
 import ZeroToOne from "./blocks/ZeroToOne";
+import ThreeToOne from "./blocks/ThreeToOne";
 import ZeroToOneNumberBlock from "./blocks/ZeroToOneNumber";
+import OneToZeroNumberBlock from "./blocks/OneToZeroNumber";
 import OneToOneNumberBlock from "./blocks/OneToOneNumber";
 import OneToZeroDropdownBlock from "./blocks/OneToZeroDropdown";
 import ZeroToOneDropdownBlock from "./blocks/ZeroToOneDropdown";
+import ZeroToOneTimeBlock from "./blocks/ZeroToOneTime";
+import OneToZeroStringBlock from "./blocks/OneToZeroString";
 
 const initialElements = [];
 
@@ -35,12 +51,16 @@ const nodeTypes = {
   default: OneToOne,
   onetoone: OneToOne,
   twotoone: TwoToOne,
+  threetoone: ThreeToOne,
   onetozero: OneToZero,
   zerotoone: ZeroToOne,
   "zerotoone-number": ZeroToOneNumberBlock,
   "onetoone-number": OneToOneNumberBlock,
+  "onetozero-number": OneToZeroNumberBlock,
   "onetozero-dropdown": OneToZeroDropdownBlock,
   "zerotoone-dropdown": ZeroToOneDropdownBlock,
+  "zerotoone-time": ZeroToOneTimeBlock,
+  "onetozero-string": OneToZeroStringBlock,
 };
 
 const edgeTypes = {
@@ -76,8 +96,8 @@ const getLayoutedElements = (elements, direction = "LR") => {
 
       // Needed to notify React Flow instance of the update.
       el.position = {
-        x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
-        y: nodeWithPosition.y - nodeHeight / 2,
+        x: nodeWithPosition.x - (nodeWidth + 50) / 2 + Math.random() / 1000,
+        y: nodeWithPosition.y - (nodeHeight + 50) / 2,
       };
     }
 
@@ -85,10 +105,23 @@ const getLayoutedElements = (elements, direction = "LR") => {
   });
 };
 
+/// STYLING
+
+const menuShow = keyframes`
+  from {
+    opacity: 0;;
+  }
+`;
+const menuHide = keyframes`
+  to {
+    opacity: 0;;
+  }
+`;
+
 const FlexDiv = styled.div`
   background-color: #fcfcfc;
 
-  flex: 3;
+  flex: 4;
 
   height: 100vh;
 `;
@@ -101,6 +134,38 @@ const ExtraControls = styled.div`
   position: absolute;
 `;
 
+const ControlledMenu = styled(MenuInner)`
+  ${menuSelector.name} {
+    font-size: 0.925rem;
+    user-select: none;
+    box-shadow: 1px 1px 20px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 6px;
+    min-width: 10rem;
+  }
+  ${menuSelector.stateOpening} {
+    animation: ${menuShow} 0.15s ease-out;
+  }
+  ${menuSelector.stateClosing} {
+    animation: ${menuHide} 0.2s ease-out forwards;
+  }
+
+  ${menuItemSelector.name} {
+    border-radius: 6px;
+    padding: 0.375rem 0.625rem;
+  }
+  ${menuItemSelector.hover} {
+    color: #fff;
+    background-color: #59a2ff;
+  }
+
+  ${menuDividerSelector.name} {
+    margin: 0.5rem 0.625rem;
+  }
+`;
+
+/// STYLING END
+
 let id = Math.floor(Math.random() * 9999999);
 const getId = () => `dndnode_${id++}`;
 
@@ -108,6 +173,10 @@ const Canvas = (props) => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [elements, setElements] = useState(initialElements);
+
+  const { toggleMenu, ...menuProps } = useMenuState();
+  const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
+  const [elementSelected, setSelectedElement] = useState(null);
 
   const onLoad = (_reactFlowInstance) => {
     setReactFlowInstance(_reactFlowInstance);
@@ -165,41 +234,87 @@ const Canvas = (props) => {
   const autoLayout = (direction) => {
     const layoutedElements = getLayoutedElements(elements, direction);
     setElements(layoutedElements);
-    reactFlowInstance.fitView();
+    reactFlowInstance?.fitView();
+  };
+
+  const onPaneContextMenu = (event) => {
+    event.preventDefault();
+    setAnchorPoint({ x: event.clientX, y: event.clientY });
+    setSelectedElement(null);
+    toggleMenu(true);
+  };
+  const onNodeContextMenu = (event, node) => {
+    event.preventDefault();
+    setAnchorPoint({ x: event.clientX, y: event.clientY });
+    setSelectedElement(node);
+    toggleMenu(true);
+  };
+  const onEdgeContextMenu = (event, edge) => {
+    event.preventDefault();
+    setAnchorPoint({ x: event.clientX, y: event.clientY });
+    setSelectedElement(edge);
+    toggleMenu(true);
+  };
+
+  const handleDeleteClick = () => {
+    if (elementSelected != null) {
+      onElementsRemove([elementSelected]);
+      setSelectedElement(null);
+    }
   };
 
   return (
     <FlexDiv>
-      <AbsoluteText style={{ margin: 10, zIndex: 10 }}>
-        Press the 'backspace' key to delete the selected block or connection.
-      </AbsoluteText>
-      <ExtraControls style={{ bottom: 0, margin: 10, zIndex: 10 }}>
-        <button onClick={() => autoLayout("LR")}>Auto Layout</button>
-      </ExtraControls>
-      <div style={{ height: "100%", width: "100%" }}>
-        <ReactFlowProvider>
-          <div
-            style={{ height: "100%", width: "100%" }}
-            className="reactflow-wrapper"
-            ref={reactFlowWrapper}
+      <div style={{ height: "100%", width: "100%" }} onContextMenu={(e) => {}}>
+        <ControlledMenu
+          {...menuProps}
+          anchorPoint={anchorPoint}
+          onClose={() => toggleMenu(false)}
+        >
+          <MenuItem
+            onClick={() => handleDeleteClick()}
+            disabled={elementSelected == null}
           >
-            <ReactFlow
-              nodeTypes={nodeTypes}
-              edgeTypes={edgeTypes}
-              elements={elements}
-              onElementsRemove={onElementsRemove}
-              onConnect={onConnect}
-              onEdgeUpdate={onEdgeUpdate}
-              connectionLineType={ConnectionLineType.Straight}
-              onLoad={onLoad}
-              onDrop={onDrop}
-              onDragOver={onDragOver}
+            Delete
+          </MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={() => setElements([])}>Clear Canvas</MenuItem>
+        </ControlledMenu>
+
+        <AbsoluteText style={{ margin: 10, zIndex: 10 }}>
+          Right Click a Block or Connection to delete them!
+        </AbsoluteText>
+        <ExtraControls style={{ bottom: 0, margin: 10, zIndex: 10 }}>
+          <button onClick={() => autoLayout("LR")}>Auto Layout</button>
+        </ExtraControls>
+        <div style={{ height: "100%", width: "100%" }}>
+          <ReactFlowProvider>
+            <div
+              style={{ height: "100%", width: "100%" }}
+              className="reactflow-wrapper"
+              ref={reactFlowWrapper}
             >
-              <Background variant="dots" gap={24} size={1} />
-              <MiniMap nodeColor={"#000"} />
-            </ReactFlow>
-          </div>
-        </ReactFlowProvider>
+              <ReactFlow
+                nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
+                elements={elements}
+                onElementsRemove={onElementsRemove}
+                onConnect={onConnect}
+                onEdgeUpdate={onEdgeUpdate}
+                connectionLineType={ConnectionLineType.Straight}
+                onLoad={onLoad}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                onPaneContextMenu={onPaneContextMenu}
+                onNodeContextMenu={onNodeContextMenu}
+                onEdgeContextMenu={onEdgeContextMenu}
+              >
+                <Background variant="dots" gap={24} size={1} />
+                <MiniMap nodeColor={"#000"} />
+              </ReactFlow>
+            </div>
+          </ReactFlowProvider>
+        </div>
       </div>
     </FlexDiv>
   );

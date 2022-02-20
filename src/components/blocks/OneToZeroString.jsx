@@ -14,28 +14,23 @@ const CustomLabel = styled.div`
   padding-bottom: 0px !important;
 `;
 
-const Dropdown = styled.select`
+const TextInput = styled.input`
   width: 150px;
   margin: 10px;
-  margin-left: 25px;
 `;
 
 export default memo(({ data, isConnectable }) => {
   return (
     <CustomNodeComponent data={data}>
-      <CustomLabel id="label">{data.label}</CustomLabel>
-      <Dropdown type="number">
-        {data.options.map((option, i) => {
-          return <option key={i}>{option}</option>;
-        })}
-      </Dropdown>
-      <ConnectionLabel style={{ right: 5 }}>out</ConnectionLabel>
+      <ConnectionLabel style={{ left: 5 }}>in</ConnectionLabel>
       <Handle
-        type="source"
-        position="right"
+        type="target"
+        position="left"
         onConnect={(params) => console.log("connected", params)}
         isConnectable={isConnectable}
       ></Handle>
+      <CustomLabel id="label">{data.label}</CustomLabel>
+      <TextInput type="text" />
     </CustomNodeComponent>
   );
 });

@@ -14,7 +14,10 @@ const Block = styled.div`
   &:hover {
     cursor: grab;
 
-    border: 2px solid #333;
+    border: 2px solid #420ac4;
+    box-shadow: 0px 0px 5px 5px #420ac419;
+
+    background-color: #fff;
   }
 `;
 

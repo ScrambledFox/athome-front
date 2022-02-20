@@ -11,8 +11,16 @@
         "type": "zerotoone"
       },
       {
-        "label": "Number",
+        "label": "Number 🔢",
         "type": "zerotoone-number"
+      },
+      {
+        "label": "Add ➕",
+        "type": "onetoone"
+      },
+      {
+        "label": "Subtract ➖",
+        "type": "twotoone"
       }
     ]
   },
@@ -20,15 +28,15 @@
     "label": "Logic",
     "blocks": [
       {
-        "label": "And",
+        "label": "IF 🅰 And 🅱",
         "type": "onetoone"
       },
       {
-        "label": "Or",
+        "label": "IF 🅰 Or 🅱",
         "type": "onetoone"
       },
       {
-        "label": "Invert (NOT)",
+        "label": "NOT (Invert)",
         "type": "onetoone"
       }
     ]
@@ -37,29 +45,71 @@
     "label": "Comparison",
     "blocks": [
       {
-        "label": "A greater than B (>)",
+        "label": "Greater than (🅰>🅱)",
         "type": "twotoone"
       },
       {
-        "label": "A less than B (<)",
+        "label": "Less than (🅰<🅱)",
         "type": "twotoone"
       },
       {
-        "label": "A equal to B (==)",
+        "label": "Equal to (🅰==🅱)",
         "type": "twotoone"
+      },
+      {
+        "label": "Between 🅰 and 🅱",
+        "type": "threetoone"
       }
     ]
   },
   {
-    "label": "Sensor",
+    "label": "Environment & Activity",
     "blocks": [
       {
-        "label": "When Someone is Home",
+        "label": "Family member is Home 🏠",
         "type": "zerotoone"
       },
       {
-        "label": "Security Camera Activity",
+        "label": "Family Member is near Home (meters)",
+        "type": "zerotoone-number"
+      },
+      {
+        "label": "Activity in Home",
         "type": "zerotoone"
+      },
+      {
+        "label": "Security Camera Activity 📷",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Front Door Key Inserted and Accepted 🔑",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Current Weather 🌦",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Temperature (°C) 🌡",
+            "Humidity (%) 💧",
+            "Rain (%) 🌧",
+            "Wind Speed (km/h) 🌪",
+            "Visability (meters) 🌫"
+          ]
+        }
+      },
+      {
+        "label": "Expected Weather 🌦 (Tomorrow)",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Temperature (°C) 🌡",
+            "Humidity (%) 💧",
+            "Rain (%) 🌧",
+            "Wind Speed (km/h) 🌪",
+            "Visability (meters) 🌫"
+          ]
+        }
       }
     ]
   },
@@ -67,12 +117,107 @@
     "label": "Time",
     "blocks": [
       {
-        "label": "Is Day",
+        "label": "Is Day 🌞",
         "type": "zerotoone"
       },
       {
-        "label": "After (X) Seconds",
+        "label": "After (X) Seconds ⌛",
         "type": "onetoone-number"
+      },
+      {
+        "label": "Time of Day ⌚",
+        "type": "zerotoone-time"
+      },
+      {
+        "label": "Current Time of Day ⌚",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Day of Week 📆",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ]
+        }
+      },
+      {
+        "label": "Current Day of Week 📆",
+        "type": "zerotoone"
+      }
+    ]
+  },
+  {
+    "label": "Ordering and Schedule",
+    "blocks": [
+      {
+        "label": "Add to Shopping Cart 🛒",
+        "type": "onetozero-string"
+      },
+      {
+        "label": "Order Shopping Cart 🛒",
+        "type": "onetozero"
+      },
+      {
+        "label": "Instant Order Item 🍏",
+        "type": "onetozero-string"
+      },
+      {
+        "label": "Minutes until expected car use 🚗",
+        "type": "zerotoone"
+      }
+    ]
+  },
+  {
+    "label": "Personal Devices",
+    "blocks": [
+      {
+        "label": "Send Phone Notification 📳",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": [
+            "George",
+            "Jamy",
+            "Richard",
+            "Katy",
+            "At Home 🏡",
+            "All ❗"
+          ]
+        }
+      },
+      {
+        "label": "Call Phone 📳",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": [
+            "George",
+            "Jamy",
+            "Richard",
+            "Katy",
+            "At Home 🏡",
+            "All ❗"
+          ]
+        }
+      },
+      {
+        "label": "Send Watch Notifcation ⌚",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": [
+            "George",
+            "Jamy",
+            "Richard",
+            "Katy",
+            "At Home 🏡",
+            "All ❗"
+          ]
+        }
       }
     ]
   },
@@ -80,63 +225,166 @@
     "label": "Smart IoT Devices",
     "blocks": [
       {
-        "label": "Set Coffee Machine",
+        "label": "Set Central Heating 🔥",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Off ❄", "Follow Target 🎯", "Force On 🔥"]
+        }
+      },
+      {
+        "label": "Set Air Conditioning 🧊",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Off", "Follow Target 🎯", "Force On 🥶"]
+        }
+      },
+      {
+        "label": "Set In-Home Temperature (°C) 🏡🌡",
+        "type": "onetozero-number"
+      },
+      {
+        "label": "Current In-Home Temperature (°C) 🏡🌡",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Target In-Home Temperature (°C) 🏡🌡",
+        "type": "zerotoone"
+      },
+      {
+        "label": "Set Coffee Machine ☕",
         "type": "onetozero-dropdown",
         "data": {
           "options": ["Brew", "Auto-Clean"]
         }
       },
       {
-        "label": "Get Coffee Machine State",
+        "label": "Get Coffee Machine State ☕",
         "type": "zerotoone-dropdown",
         "data": {
           "options": [
             "Coffee Bean Amount (%)",
             "Coffee Ready Level (%)",
-            "Cleanliness (%)"
+            "Cleanliness (%)",
+            "Is Brewing ☕",
+            "Is Cleaning 🧹"
           ]
         }
       },
       {
-        "label": "Set Front Door",
+        "label": "Set Front Door 🚪",
         "type": "onetozero-dropdown",
         "data": {
-          "options": ["Lock", "Unlock", "Open", "Close"]
+          "options": ["Lock 🔒", "Unlock 🔓", "Open", "Close"]
         }
       },
       {
-        "label": "Get Front door State",
+        "label": "Get Front door State 🚪",
         "type": "zerotoone-dropdown",
         "data": {
-          "options": ["Locked", "Closed"]
+          "options": ["Locked 🔒", "Closed"]
         }
       },
       {
         "label": "Set Windows",
         "type": "onetozero-dropdown",
         "data": {
-          "options": ["Lock", "Unlock", "Open", "Close"]
+          "options": ["Lock 🔒", "Unlock 🔓", "Open", "Close"]
         }
       },
       {
         "label": "Get Windows State",
         "type": "zerotoone-dropdown",
         "data": {
-          "options": ["Locked", "Closed"]
+          "options": ["Locked 🔒", "Closed"]
         }
       },
       {
-        "label": "Set House Alarm ⚠",
+        "label": "Set Blinds ",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Open", "Close"]
+        }
+      },
+      {
+        "label": "Get Blinds State",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": ["Opened"]
+        }
+      },
+      {
+        "label": "Set Lights 💡",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["On 💡", "Dimmed 🕯", "Off 🌑"]
+        }
+      },
+      {
+        "label": "Set House Alarm 🔔",
         "type": "onetozero-dropdown",
         "data": {
           "options": ["Alarm 🔔", "Silence 🔇", "Enable ✔", "Fully Disable ‼"]
         }
       },
       {
-        "label": "Get House Alarm State ⚠",
+        "label": "Get House Alarm State 🔔",
         "type": "zerotoone-dropdown",
         "data": {
           "options": ["Alarming 🔔‼", "Ready 👀"]
+        }
+      },
+      {
+        "label": "Charge Car to % 🚗⚡",
+        "type": "onetozero-number"
+      },
+      {
+        "label": "Set Car AC 🚗🔥",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Turn on", "Follow Target 🎯", "Turn off"]
+        }
+      },
+      {
+        "label": "Get Car Status 🚗",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Charge % ⚡",
+            "Fuel % ⛽",
+            "Cleanliness (%) 🧹",
+            "Inside Temperature (°C) 🌡",
+            "Windows Frozen"
+          ]
+        }
+      },
+      {
+        "label": "Set Dishwasher 🍽",
+        "type": "onetozero-dropdown",
+        "data": {
+          "options": ["Start Program ▶", "Stop Program ⏹"]
+        }
+      },
+      {
+        "label": "Get Dishwasher Status 🍽",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Is Running Program",
+            "Has Cycled Since Last Opened",
+            "Current Program Progress (%)",
+            "Contains Dishes"
+          ]
+        }
+      },
+      {
+        "label": "Get Plant Status 🌿",
+        "type": "zerotoone-dropdown",
+        "data": {
+          "options": [
+            "Ground Water (%) 💧",
+            "Current Light Exposure (%) 🌞",
+            "Is Resting 💤"
+          ]
         }
       }
     ]

@@ -28,11 +28,11 @@
     "label": "Logic",
     "blocks": [
       {
-        "label": "IF All (AND)",
+        "label": "If All (AND)",
         "type": "onetoone"
       },
       {
-        "label": "IF Any (OR)",
+        "label": "If Any (OR)",
         "type": "onetoone"
       },
       {
@@ -45,15 +45,15 @@
     "label": "Comparison",
     "blocks": [
       {
-        "label": "Greater than (🅰>🅱)",
+        "label": "Greater Than (🅰>🅱)",
         "type": "twotoone"
       },
       {
-        "label": "Less than (🅰<🅱)",
+        "label": "Less Than (🅰<🅱)",
         "type": "twotoone"
       },
       {
-        "label": "Equal to (🅰==🅱)",
+        "label": "Equal To (🅰==🅱)",
         "type": "twotoone"
       },
       {

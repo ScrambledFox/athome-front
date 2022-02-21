@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import ReactFlow, {
   ReactFlowProvider,
@@ -11,6 +11,7 @@ import ReactFlow, {
   addEdge,
   updateEdge,
 } from "react-flow-renderer";
+import { useStateWithCallbackLazy } from "use-state-with-callback";
 
 import {
   ControlledMenu as MenuInner,
@@ -172,7 +173,7 @@ const getId = () => `dndnode_${id++}`;
 const Canvas = (props) => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
-  const [elements, setElements] = useState(initialElements);
+  const [elements, setElements] = useStateWithCallbackLazy(initialElements);
 
   const { toggleMenu, ...menuProps } = useMenuState();
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
@@ -231,11 +232,11 @@ const Canvas = (props) => {
     setElements((els) => els.concat(newNode));
   };
 
-  TODO: // use https://www.npmjs.com/package/use-state-with-callback to fit view to fix double click behaviour.
   const autoLayout = (direction) => {
     const layoutedElements = getLayoutedElements(elements, direction);
-    setElements(layoutedElements);
-    reactFlowInstance?.fitView();
+    setElements(layoutedElements, () => {
+      reactFlowInstance?.fitView();
+    });
   };
 
   const onPaneContextMenu = (event) => {

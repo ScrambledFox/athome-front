@@ -82,6 +82,10 @@
         "type": "zerotoone"
       },
       {
+        "label": "Door bell pressed 🔔",
+        "type": "zerotoone"
+      },
+      {
         "label": "Front Door Key Inserted and Accepted 🔑",
         "type": "zerotoone"
       },
@@ -341,7 +345,7 @@
         "label": "Set Car AC 🚗🔥",
         "type": "onetozero-dropdown",
         "data": {
-          "options": ["Turn on", "Follow Target 🎯", "Turn off"]
+          "options": ["Force on", "Follow Target 🎯", "Force off"]
         }
       },
       {

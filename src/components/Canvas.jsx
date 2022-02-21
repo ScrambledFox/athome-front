@@ -231,6 +231,7 @@ const Canvas = (props) => {
     setElements((els) => els.concat(newNode));
   };
 
+  TODO: // use https://www.npmjs.com/package/use-state-with-callback to fit view to fix double click behaviour.
   const autoLayout = (direction) => {
     const layoutedElements = getLayoutedElements(elements, direction);
     setElements(layoutedElements);

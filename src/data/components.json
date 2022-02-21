@@ -28,15 +28,15 @@
     "label": "Logic",
     "blocks": [
       {
-        "label": "IF 🅰 And 🅱",
+        "label": "IF All (AND)",
         "type": "onetoone"
       },
       {
-        "label": "IF 🅰 Or 🅱",
+        "label": "IF Any (OR)",
         "type": "onetoone"
       },
       {
-        "label": "NOT (Invert)",
+        "label": "Invert (NOT)",
         "type": "onetoone"
       }
     ]

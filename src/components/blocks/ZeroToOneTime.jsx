@@ -1,14 +1,8 @@
 import React, { memo, useState } from "react";
-import { Handle } from "react-flow-renderer";
 import styled from "styled-components";
 
 import CustomNodeComponent from "../CustomNodeComponent";
-
-const ConnectionLabel = styled.div`
-  position: absolute;
-  font-size: 6px;
-  top: 50%;
-`;
+import { ConnectionLabel, StyledHandle } from "../CustomNodeComponent";
 
 const CustomLabel = styled.div`
   padding-bottom: 0px !important;
@@ -17,6 +11,7 @@ const CustomLabel = styled.div`
 const NumberInput = styled.input`
   width: 50px;
   margin: 10px;
+  margin-bottom: 20px;
 `;
 
 export default memo(({ data, isConnectable }) => {
@@ -57,12 +52,12 @@ export default memo(({ data, isConnectable }) => {
         }}
       />
       <ConnectionLabel style={{ right: 5 }}>out</ConnectionLabel>
-      <Handle
+      <StyledHandle
         type="source"
         position="right"
-        onConnect={(params) => console.log("connected", params)}
+        onConnect={(params) => ("connected", params)}
         isConnectable={isConnectable}
-      ></Handle>
+      ></StyledHandle>
     </CustomNodeComponent>
   );
 });

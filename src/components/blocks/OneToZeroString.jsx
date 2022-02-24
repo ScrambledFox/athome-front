@@ -1,14 +1,8 @@
 import React, { memo } from "react";
-import { Handle } from "react-flow-renderer";
 import styled from "styled-components";
 
 import CustomNodeComponent from "../CustomNodeComponent";
-
-const ConnectionLabel = styled.div`
-  position: absolute;
-  font-size: 6px;
-  top: 50%;
-`;
+import { ConnectionLabel, StyledHandle } from "../CustomNodeComponent";
 
 const CustomLabel = styled.div`
   padding-bottom: 0px !important;
@@ -17,18 +11,18 @@ const CustomLabel = styled.div`
 const TextInput = styled.input`
   width: 150px;
   margin: 10px;
+  margin-left: 20px;
 `;
 
 export default memo(({ data, isConnectable }) => {
   return (
     <CustomNodeComponent data={data}>
       <ConnectionLabel style={{ left: 5 }}>in</ConnectionLabel>
-      <Handle
+      <StyledHandle
         type="target"
         position="left"
-        onConnect={(params) => console.log("connected", params)}
         isConnectable={isConnectable}
-      ></Handle>
+      ></StyledHandle>
       <CustomLabel id="label">{data.label}</CustomLabel>
       <TextInput type="text" />
     </CustomNodeComponent>

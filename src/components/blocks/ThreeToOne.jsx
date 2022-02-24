@@ -1,54 +1,44 @@
 import React, { memo } from "react";
-import { Handle } from "react-flow-renderer";
 import styled from "styled-components";
 
 import CustomNodeComponent from "../CustomNodeComponent";
-
-const ConnectionLabel = styled.div`
-  position: absolute;
-  font-size: 6px;
-
-  top: 50%;
-`;
+import { ConnectionLabel, StyledHandle } from "../CustomNodeComponent";
 
 export default memo(({ data, isConnectable }) => {
   return (
     <CustomNodeComponent data={data}>
-      <Handle
+      <ConnectionLabel style={{ top: "20%", left: 15 }}>a</ConnectionLabel>
+      <ConnectionLabel style={{ top: "50%", left: 15 }}>in</ConnectionLabel>
+      <ConnectionLabel style={{ top: "80%", left: 15 }}>b</ConnectionLabel>
+      <div id="label">{data.label}</div>
+      <ConnectionLabel style={{ right: 5 }}>out</ConnectionLabel>
+      <StyledHandle
         id="a"
         type="target"
         position="left"
         style={{ top: "20%" }}
-        onConnect={(params) => console.log("connected", params)}
         isConnectable={isConnectable}
-      ></Handle>
-      <Handle
+      ></StyledHandle>
+      <StyledHandle
         id="b"
         type="target"
         position="left"
         style={{ top: "50%" }}
-        onConnect={(params) => console.log("connected", params)}
         isConnectable={isConnectable}
-      ></Handle>
-      <Handle
+      ></StyledHandle>
+      <StyledHandle
         id="c"
         type="target"
         position="left"
         style={{ top: "80%" }}
-        onConnect={(params) => console.log("connected", params)}
         isConnectable={isConnectable}
-      ></Handle>
-      <ConnectionLabel style={{ top: "20%", left: 5 }}>a</ConnectionLabel>
-      <ConnectionLabel style={{ top: "50%", left: 5 }}>in</ConnectionLabel>
-      <ConnectionLabel style={{ top: "80%", left: 5 }}>b</ConnectionLabel>
-      <div id="label">{data.label}</div>
-      <ConnectionLabel style={{ right: 5 }}>out</ConnectionLabel>
-      <Handle
+      ></StyledHandle>
+      <StyledHandle
         type="source"
         position="right"
-        onConnect={(params) => console.log("connected", params)}
+        style={{ right: "-4.5%" }}
         isConnectable={isConnectable}
-      ></Handle>
+      ></StyledHandle>
     </CustomNodeComponent>
   );
 });

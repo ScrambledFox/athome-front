@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import Logo from "../assets/logobig.png";
 
+import { Version } from "../App";
+
 const VerticalFlexDiv = styled.div`
   flex: 1;
 
@@ -33,6 +35,9 @@ const VerticalFlexDiv = styled.div`
 const Title = () => {
   return (
     <VerticalFlexDiv>
+      <p style={{ position: "absolute", bottom: -15, right: 20, zIndex: 100 }}>
+        Made by Joris Lodewijks with ❤️ - Version {Version}
+      </p>
       <img src={Logo} onClick={() => window.location.reload()} />
       <h1>Flow Creator 🏡</h1>
       <h3>Managing Hughes Family's Home</h3>

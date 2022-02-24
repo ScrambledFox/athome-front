@@ -19,8 +19,25 @@ const CustomNode = styled.div`
   }
 `;
 
+const StyledHandle = styled(Handle)`
+  && {
+    width: 15px !important;
+    height: 15px !important;
+    &:hover {
+      background: #420ac4;
+    }
+  }
+`;
+
+const ConnectionLabel = styled.div`
+  position: absolute;
+  font-size: 6px;
+  top: 80%;
+`;
+
 const CustomNodeComponent = ({ children, data }) => {
   return <CustomNode>{children}</CustomNode>;
 };
 
 export default CustomNodeComponent;
+export { ConnectionLabel, StyledHandle };

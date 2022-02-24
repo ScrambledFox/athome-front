@@ -5,7 +5,7 @@ import ListBlock from "./ListBlock";
 import componentCategories from "../data/components.json";
 
 const VerticalFlexDiv = styled.div`
-  flex: 5;
+  flex: 10;
 
   background: #fafafa;
 
